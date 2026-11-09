@@ -1,0 +1,112 @@
+<app-page-scaffold [heading]="true">
+  <mat-form-field pageHeading class="search" appearance="outline" subscriptSizing="dynamic">
+    <mat-label>{{ 'library.search' | transloco }}</mat-label>
+    <input matInput type="search" [formControl]="search" />
+  </mat-form-field>
+  <div pageActions class="upload">
+    @if (videos$ | async; as videos) {
+      @if (user$ | async; as user) {
+        @if (deletable(videos, user.permissions, user.id); as rows) {
+          @if (rows.length > 0) {
+            <mat-checkbox
+              [checked]="allSelected(rows)"
+              [indeterminate]="someSelected(rows)"
+              (change)="toggleAll(rows)"
+            >
+              {{ 'library.selectAll' | transloco }}
+            </mat-checkbox>
+            <button
+              mat-stroked-button
+              class="danger"
+              type="button"
+              [disabled]="!someSelected(rows) && !allSelected(rows)"
+              (click)="removeSelected(rows)"
+            >
+              {{ 'library.delete' | transloco }}
+            </button>
+          }
+        }
+      }
+    }
+    <ng-container *appHasPermission="'video.upload'">
+      <button
+        class="upload-button"
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="fileInput.click()"
+      >
+        <span class="upload-content">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z" />
+          </svg>
+          <span>{{ 'library.upload' | transloco }}</span>
+        </span>
+      </button>
+      <input
+        #fileInput
+        class="file-input"
+        type="file"
+        multiple
+        accept="video/mp4,video/webm,video/quicktime,video/x-matroska,.mp4,.webm,.mov,.mkv"
+        tabindex="-1"
+        (change)="onFile($event)"
+      />
+    </ng-container>
+  </div>
+
+  @if (videos$ | async; as videos) {
+    @if (user$ | async; as user) {
+      @if (videos.length === 0) {
+        <p class="empty">{{ (appliedQuery() ? 'library.searchEmpty' : 'library.empty') | transloco }}</p>
+      } @else {
+        <div class="grid">
+          @for (video of videos; track video.id) {
+            <mat-card [class.selected]="isSelected(video)">
+              @if (canDelete(video, user.permissions, user.id)) {
+                <mat-checkbox
+                  class="pick"
+                  [checked]="isSelected(video)"
+                  [aria-label]="'library.select' | transloco"
+                  (change)="toggle(video)"
+                  (click)="$event.stopPropagation()"
+                />
+              }
+              <button class="preview" type="button" (click)="watch(video)">
+                @if (video.thumbnailUrl) {
+                  <img [src]="video.thumbnailUrl" [alt]="video.title" [class.portrait]="portrait(video)" />
+                } @else {
+                  <span class="placeholder">{{ 'library.noPreview' | transloco }}</span>
+                }
+              </button>
+              <mat-card-content>
+                <div class="heading">
+                  <button type="button" (click)="watch(video)">{{ video.title }}</button>
+                  <app-status-chip [status]="video.status" />
+                </div>
+                @if (video.durationSeconds !== null) {
+                  <p class="meta">{{ duration(video.durationSeconds) }}</p>
+                }
+                @if (video.failureReason) {
+                  <p class="message">{{ video.failureReason }}</p>
+                }
+              </mat-card-content>
+              <mat-card-actions align="end">
+                @if (video.status === 'failed') {
+                  <button mat-button type="button" *appHasPermission="'video.retry'" (click)="retry(video)">
+                    {{ 'library.retry' | transloco }}
+                  </button>
+                }
+                @if (canDelete(video, user.permissions, user.id)) {
+                  <button mat-button type="button" (click)="remove(video)">
+                    {{ 'library.delete' | transloco }}
+                  </button>
+                }
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      }
+    }
+  }
+</app-page-scaffold>

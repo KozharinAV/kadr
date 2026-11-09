@@ -1,0 +1,25 @@
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+}
+
+svg {
+  width: 20px;
+  height: 20px;
+}
+
+.label {
+  display: block;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-medium);
+}
+
+p {
+  margin: 0;
+}

@@ -1,0 +1,33 @@
+<div class="shell">
+  <mat-toolbar class="toolbar">
+    <span class="brand">{{ 'app.title' | transloco }}</span>
+    <a
+      mat-button
+      class="nav"
+      routerLink="/library"
+      [class.active]="libraryActive()"
+      [attr.aria-current]="libraryActive() ? 'page' : null"
+    >
+      {{ 'nav.library' | transloco }}
+    </a>
+    <a
+      mat-button
+      class="nav"
+      routerLink="/admin/users"
+      [class.active]="usersActive()"
+      [attr.aria-current]="usersActive() ? 'page' : null"
+      *appHasPermission="'user.manage'"
+    >
+      {{ 'nav.users' | transloco }}
+    </a>
+    <span class="spacer"></span>
+    @if (user$ | async; as user) {
+      <span class="who">{{ user.email }}</span>
+    }
+    <app-language-select />
+    <button mat-button type="button" (click)="logout()">{{ 'auth.logout' | transloco }}</button>
+  </mat-toolbar>
+  <main>
+    <router-outlet />
+  </main>
+</div>

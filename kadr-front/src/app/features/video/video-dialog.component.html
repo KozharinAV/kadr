@@ -1,0 +1,68 @@
+@if (video$ | async; as video) {
+  <h2 mat-dialog-title class="head">
+    <span class="title">{{ video.title }}</span>
+    <button
+      mat-icon-button
+      type="button"
+      mat-dialog-close
+      [matTooltip]="'library.close' | transloco"
+      [attr.aria-label]="'library.close' | transloco"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </button>
+  </h2>
+  <mat-dialog-content>
+    <div class="stage">
+      @if (video.playbackUrl) {
+        <video
+          autoplay
+          playsinline
+          controls
+          [src]="video.playbackUrl"
+          [poster]="video.thumbnailUrl ?? undefined"
+          (loadedmetadata)="onMeta($event)"
+        ></video>
+      } @else {
+        <p class="waiting">{{ 'library.processing' | transloco }}</p>
+      }
+    </div>
+    <div class="facts">
+      <app-status-chip [status]="video.status" />
+      @if (video.durationSeconds !== null) {
+        <span>{{ duration(video.durationSeconds) }}</span>
+      }
+      @if (video.width && video.height) {
+        <span>{{ video.width }}×{{ video.height }}</span>
+      }
+    </div>
+    @if (video.failureReason) {
+      <p class="message">{{ video.failureReason }}</p>
+      <button mat-stroked-button type="button" *appHasPermission="'video.retry'" (click)="retry(video.id)">
+        {{ 'library.retry' | transloco }}
+      </button>
+    }
+  </mat-dialog-content>
+} @else {
+  <h2 mat-dialog-title class="head">
+    <span class="title">{{ 'library.loading' | transloco }}</span>
+    <button
+      mat-icon-button
+      type="button"
+      mat-dialog-close
+      [matTooltip]="'library.close' | transloco"
+      [attr.aria-label]="'library.close' | transloco"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </button>
+  </h2>
+}

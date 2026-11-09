@@ -1,0 +1,16 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: min(420px, 70vw);
+  padding-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.message {
+  margin: 0;
+  color: var(--mat-sys-error);
+}

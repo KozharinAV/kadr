@@ -1,0 +1,31 @@
+.files {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: min(560px, 72vw);
+}
+
+.file {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(160px, 200px);
+  gap: 12px 16px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.name {
+  grid-column: 1 / -1;
+}
+
+.toggles {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.message {
+  margin: 12px 0 0;
+  color: var(--mat-sys-error);
+}

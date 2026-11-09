@@ -1,0 +1,118 @@
+<app-page-scaffold>
+  @if (state$ | async; as state) {
+    @if (state.error) {
+      <p class="message">{{ 'admin.loadError' | transloco }}</p>
+    } @else {
+      <div class="toolbar">
+        <button mat-flat-button color="primary" type="button" (click)="openCreate()">
+          {{ 'admin.create' | transloco }}
+        </button>
+        <button
+          mat-stroked-button
+          type="button"
+          [disabled]="selection.selected.length !== 1"
+          (click)="editSelected()"
+        >
+          {{ 'admin.edit' | transloco }}
+        </button>
+        <span [matTooltip]="'admin.selfDelete' | transloco" [matTooltipDisabled]="!includesSelf()">
+          <button
+            mat-stroked-button
+            class="danger"
+            type="button"
+            [disabled]="selection.selected.length === 0 || includesSelf()"
+            (click)="remove(selection.selected)"
+          >
+            {{ 'admin.delete' | transloco }}
+          </button>
+        </span>
+      </div>
+
+      @if (deleteError(); as key) {
+        <p class="message">{{ key | transloco }}</p>
+      }
+
+      @if (state.users.length === 0) {
+        <p class="empty">{{ 'admin.empty' | transloco }}</p>
+      } @else {
+        <table mat-table [dataSource]="state.users">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                [checked]="allSelected(state.users)"
+                [indeterminate]="someSelected(state.users)"
+                [attr.aria-label]="'admin.selectAll' | transloco"
+                (change)="toggleAll(state.users)"
+                (click)="$event.stopPropagation()"
+              />
+            </th>
+            <td mat-cell *matCellDef="let user" (click)="$event.stopPropagation()">
+              <mat-checkbox
+                [checked]="isSelected(user)"
+                [attr.aria-label]="'admin.select' | transloco"
+                (change)="toggle(user)"
+                (click)="$event.stopPropagation()"
+              />
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>{{ 'admin.email' | transloco }}</th>
+            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+          </ng-container>
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>{{ 'admin.role' | transloco }}</th>
+            <td mat-cell *matCellDef="let user">{{ 'roles.' + user.role | transloco }}</td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'admin.actions' | transloco }}</th>
+            <td mat-cell *matCellDef="let user" (click)="$event.stopPropagation()">
+              <div class="actions">
+                <button
+                  mat-icon-button
+                  type="button"
+                  [matTooltip]="'admin.edit' | transloco"
+                  [attr.aria-label]="'admin.edit' | transloco"
+                  (click)="openEdit(user)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                    />
+                  </svg>
+                </button>
+                <span
+                  [matTooltip]="(isSelf(user) ? 'admin.selfDelete' : 'admin.delete') | transloco"
+                >
+                  <button
+                    mat-icon-button
+                    class="danger"
+                    type="button"
+                    [disabled]="isSelf(user)"
+                    [attr.aria-label]="(isSelf(user) ? 'admin.selfDelete' : 'admin.delete') | transloco"
+                    (click)="remove([user])"
+                  >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                    />
+                  </svg>
+                  </button>
+                </span>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr
+            mat-row
+            class="row"
+            [class.selected]="isSelected(row)"
+            *matRowDef="let row; columns: columns"
+            (click)="openCard(row)"
+          ></tr>
+        </table>
+      }
+    }
+  }
+</app-page-scaffold>

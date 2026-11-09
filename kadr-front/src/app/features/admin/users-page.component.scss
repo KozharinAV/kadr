@@ -1,0 +1,50 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.danger:not(:disabled) {
+  color: var(--mat-sys-error);
+}
+
+table {
+  width: 100%;
+  background: var(--mat-sys-surface-container-low);
+}
+
+.row {
+  cursor: pointer;
+}
+
+.selected {
+  background: var(--mat-sys-secondary-container);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+
+  span {
+    display: inline-flex;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.message {
+  margin: 0 0 12px;
+  color: var(--mat-sys-error);
+}
+
+.empty {
+  margin: 0;
+  padding: 32px;
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  color: var(--mat-sys-on-surface-variant);
+}

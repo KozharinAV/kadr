@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "Kadr"
+  },
+  "nav": {
+    "library": "Library",
+    "users": "Users"
+  },
+  "auth": {
+    "subtitle": "Sign in to the video processing service",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "logout": "Sign out",
+    "logoutTitle": "Sign out",
+    "logoutMessage": "End the session on this device?",
+    "invalidCredentials": "Incorrect email or password"
+  },
+  "library": {
+    "title": "Library",
+    "search": "File name search",
+    "searchEmpty": "No videos with that name",
+    "empty": "No videos yet. Upload the first file.",
+    "videoTitle": "Title",
+    "file": "File",
+    "fileName": "File name",
+    "upload": "Upload",
+    "uploading": "Uploading…",
+    "uploadSettings": "Upload settings",
+    "quality": "Quality",
+    "qualityHigh": "High",
+    "qualityStandard": "Standard",
+    "qualityEconomy": "Economy",
+    "rotate": "Rotate 90°",
+    "mute": "Remove audio",
+    "previewAt": "Preview frame, sec",
+    "fileRequired": "Choose a video file",
+    "uploadError": "Upload failed. Use mp4, webm, mov or mkv up to 200 MB.",
+    "noPreview": "The preview appears after processing",
+    "retry": "Retry",
+    "delete": "Delete",
+    "deleteTitle": "Delete video",
+    "deleteMessage": "Delete this video and its files?",
+    "deleteMany": "Delete the selected videos ({{count}})?",
+    "select": "Select",
+    "selectAll": "Select all",
+    "back": "Back to the library",
+    "close": "Close",
+    "processing": "The video is still processing",
+    "loading": "Loading"
+  },
+  "status": {
+    "queued": "Queued",
+    "processing": "Processing",
+    "done": "Ready",
+    "failed": "Failed"
+  },
+  "admin": {
+    "usersTitle": "Users",
+    "email": "Email",
+    "role": "Role",
+    "loadError": "Could not load users",
+    "create": "Create",
+    "createTitle": "Create user",
+    "save": "Save",
+    "edit": "Edit",
+    "editTitle": "Edit user",
+    "delete": "Delete",
+    "actions": "Actions",
+    "select": "Select",
+    "selectAll": "Select all",
+    "close": "Close",
+    "empty": "No data",
+    "passwordOptional": "Leave blank to keep the password",
+    "emailTaken": "This email is already in use",
+    "lastAdmin": "The last administrator cannot be removed",
+    "ownsVideos": "Delete this user's videos first",
+    "selfDelete": "You cannot delete your own account",
+    "saveError": "Could not save the user",
+    "deleteTitle": "Delete",
+    "deleteMessage": "Delete «{{email}}»?",
+    "deleteMany": "Delete the selected users ({{count}})?"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "editor": "Editor",
+    "viewer": "Viewer"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter an email address",
+    "minLength": "The value is too short",
+    "invalid": "Check the value"
+  },
+  "lang": {
+    "label": "Language"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
+}

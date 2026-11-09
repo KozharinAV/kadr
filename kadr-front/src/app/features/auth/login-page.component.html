@@ -1,0 +1,35 @@
+<div class="login">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>{{ 'app.title' | transloco }}</mat-card-title>
+      <mat-card-subtitle>{{ 'auth.subtitle' | transloco }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'auth.email' | transloco }}</mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="username" />
+          @if (errorKey(form.controls.email); as key) {
+            <mat-error>{{ key | transloco }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'auth.password' | transloco }}</mat-label>
+          <input matInput type="password" formControlName="password" autocomplete="current-password" />
+          @if (errorKey(form.controls.password); as key) {
+            <mat-error>{{ key | transloco }}</mat-error>
+          }
+        </mat-form-field>
+        @if (submitError(); as key) {
+          <p class="form-error">{{ key | transloco }}</p>
+        }
+        <button mat-flat-button color="primary" type="submit" [disabled]="submitting()">
+          {{ 'auth.signIn' | transloco }}
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <app-language-select />
+    </mat-card-actions>
+  </mat-card>
+</div>

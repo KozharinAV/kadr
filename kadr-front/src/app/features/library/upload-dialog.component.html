@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ 'library.uploadSettings' | transloco }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="files" formArrayName="items">
+      @for (item of items.controls; track $index) {
+        <section class="file" [formGroupName]="$index">
+          <mat-form-field class="name" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'library.fileName' | transloco }}</mat-label>
+            <input matInput formControlName="title" maxlength="200" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'library.quality' | transloco }}</mat-label>
+            <mat-select formControlName="quality">
+              @for (quality of qualities; track quality) {
+                <mat-option [value]="quality">{{ qualityLabel(quality) | transloco }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'library.previewAt' | transloco }}</mat-label>
+            <input matInput type="number" formControlName="thumbnailOffset" min="0" max="86400" step="1" />
+          </mat-form-field>
+          <div class="toggles">
+            <mat-slide-toggle formControlName="rotate">{{ 'library.rotate' | transloco }}</mat-slide-toggle>
+            <mat-slide-toggle formControlName="mute">{{ 'library.mute' | transloco }}</mat-slide-toggle>
+          </div>
+        </section>
+      }
+    </div>
+  </form>
+  @if (errorKey(); as key) {
+    <p class="message">{{ key | transloco }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" [disabled]="uploading()" (click)="cancel()">
+    {{ 'common.cancel' | transloco }}
+  </button>
+  <button mat-flat-button color="primary" type="button" [disabled]="uploading()" (click)="upload()">
+    {{ (uploading() ? 'library.uploading' : 'library.upload') | transloco }}
+  </button>
+</mat-dialog-actions>
